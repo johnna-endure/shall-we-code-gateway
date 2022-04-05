@@ -1,3 +1,7 @@
+jwt:
+  issuer: shall-we-code
+  secret: shall-we-code-secret-key
+
 server:
   port: 50000
 
@@ -9,3 +13,5 @@ spring:
           uri: http://localhost:50200
           predicates:
             - Path=/backend/**
+
+
