@@ -1,0 +1,11 @@
+server:
+  port: 50000
+
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: swc-backend
+          uri: http://localhost:50200
+          predicates:
+            - Path=/backend/**
