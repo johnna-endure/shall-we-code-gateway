@@ -12,20 +12,19 @@ class JWTGeneratorTest(@Autowired var jwtGenerator: JWTGenerator) {
     @Test
     fun beanLoadTest() {
         assertThat(jwtGenerator).isNotNull
-        assertThat(jwtGenerator.issuer).isNotNull
-        assertThat(jwtGenerator.secret).isNotNull
     }
 
     @Test
     fun `토큰 생성 성공`() {
         //given
+        val userId = 1L
+        val role = arrayOf("user", "admin")
 
         //when
-//        jwtGenerator.generateToken()
+        val token = jwtGenerator.generateToken(userId, role)
 
         //then
+        assertThat(token).isNotNull
     }
-
-
 
 }

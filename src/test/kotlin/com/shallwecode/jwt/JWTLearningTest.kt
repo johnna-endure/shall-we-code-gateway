@@ -10,9 +10,9 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
 import java.time.ZoneId
-import java.util.Date
+import java.util.*
 
-class JWTLearingTest {
+class JWTLearningTest {
 
     @Test
     fun `JWT 생성`() {
@@ -74,15 +74,17 @@ class JWTLearingTest {
     @Test
     fun `payload claim 정보를 포함한 토큰 생성`() {
         val issuer = "shallwecode"
+        val zoneId = ZoneId.of("Asia/Seoul")
+
         val issuedAt = Date.from(
             LocalDate.now()
-                .atStartOfDay(ZoneId.systemDefault())
+                .atStartOfDay(zoneId)
                 .toInstant()
         )
 
         val expiredAt = Date.from(
             LocalDate.now().plusDays(1)
-                .atStartOfDay(ZoneId.systemDefault())
+                .atStartOfDay(zoneId)
                 .toInstant()
         )
         val userId = 12
@@ -110,7 +112,7 @@ class JWTLearingTest {
                 assertThat(it.claims["userId"]?.asInt()).isEqualTo(userId)
                 assertThat(it.claims["role"]?.asArray(String::class.java)).isEqualTo(role)
             }
-
     }
+
 
 }
