@@ -1,6 +1,6 @@
 package com.shallwecode.jwt
 
-import com.shallwecode.certificate.jwt.JWTGenerator
+import com.shallwecode.certification.jwt.JWTGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

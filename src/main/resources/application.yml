@@ -4,6 +4,11 @@ jwt:
 server:
   port: 50000
 
+redis:
+  config:
+    host: localhost
+    port: 6379
+
 spring:
   cloud:
     gateway:
@@ -27,5 +32,3 @@ spring:
               - OPTIONS
               - HEAD
             allowed-headers: "*"
-
-

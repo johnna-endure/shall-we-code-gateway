@@ -1,6 +1,6 @@
 package com.shallwecode.jwt
 
-import com.shallwecode.certificate.jwt.JWTVerifier
+import com.shallwecode.certification.jwt.JWTVerifier
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
