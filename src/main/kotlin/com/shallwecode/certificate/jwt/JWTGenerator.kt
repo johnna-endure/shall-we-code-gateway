@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 import java.time.LocalDate
+import java.time.LocalDateTime.now
 import java.time.ZoneId
 import java.util.*
 
@@ -13,12 +14,14 @@ class JWTGenerator(
     @Value("\${jwt.issuer}") private val issuer: String,
     @Value("\${jwt.secret}") private val secret: String
 ) {
-    /**
-     * 토큰 생성
-     */
-    fun generateToken(userId: Long, role: Array<String>): String {
-        validateIssuerAndSecret()
 
+    /**
+     * 토큰을 발행합니다.
+     * @param userId 사용자 아이디
+     * @param role 사용자 권한
+     * @param userSecret 사용자 정보를 이용한 시크릿 값(아이디 + 패스워드의 해시값)
+     */
+    fun issueToken(userId: Long, role: Array<String>, userSecret: Int): String {
         val zoneId = ZoneId.of("Asia/Seoul")
         val issuedAt = Date.from(
             LocalDate.now()
@@ -26,11 +29,12 @@ class JWTGenerator(
                 .toInstant()
         )
         val expiredAt = Date.from(
-            LocalDate.now().plusDays(3)
+            LocalDate.now().plusDays(7)
                 .atStartOfDay(zoneId)
                 .toInstant()
         )
-        val algorithm = Algorithm.HMAC256(secret)
+
+        val algorithm = Algorithm.HMAC256("${secret}${userSecret}${now()}")
 
         return JWT.create()
             .withIssuer(issuer)
@@ -46,8 +50,4 @@ class JWTGenerator(
      * 존재하지 않을 경우 JWTCreateException 예외를 던집니다.
      */
 
-    private fun validateIssuerAndSecret() {
-        this.issuer
-        this.secret
-    }
 }

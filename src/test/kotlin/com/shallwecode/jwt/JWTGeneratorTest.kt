@@ -16,15 +16,18 @@ class JWTGeneratorTest(@Autowired var jwtGenerator: JWTGenerator) {
 
     @Test
     fun `토큰 생성 성공`() {
-        //given
+        // given
         val userId = 1L
-        val role = arrayOf("user", "admin")
+        val userPassword = "testpassword"
+        val userSecret = "${userId}${userPassword}".hashCode()
+        val userRoles = arrayOf("user")
 
-        //when
-        val token = jwtGenerator.generateToken(userId, role)
+        // when
+        val token = jwtGenerator.issueToken(userId, userRoles, userSecret)
 
-        //then
-        assertThat(token).isNotNull
+        // then
+
     }
+
 
 }
