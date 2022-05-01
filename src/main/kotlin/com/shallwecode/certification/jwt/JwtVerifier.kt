@@ -3,6 +3,9 @@ package com.shallwecode.certification.jwt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.InvalidClaimException
+import com.auth0.jwt.exceptions.SignatureVerificationException
+import com.auth0.jwt.exceptions.TokenExpiredException
 import com.shallwecode.certification.jwt.config.JwtProperties
 import org.springframework.stereotype.Component
 
@@ -15,12 +18,15 @@ class JwtVerifier(
 ) {
 
     /**
-     * 발행자와 JWT 사인을 검증합니다.
-     * 예외가 발생하는 경우 JWTVerificationException 하위 예외를 던집니다.
-     * 하위 예외 : SignatureVerificationException, InvalidClaimException
+     * 토큰의 발행자와 만료 여부, JWT 사인을 검증합니다.
+     * @throws TokenExpiredException 토큰이 만료됐을 경우
+     * @throws SignatureVerificationException 토큰 사인 검증에 실패한 경우
+     * @throws InvalidClaimException 발행인 등 클레임 검증에 실패한 경우
+     *
      */
-    fun verifyIssuerAndSecret(token: String, secret: String) {
-        val algorithm = Algorithm.HMAC256(secret)
+    fun verifyToken(token: String, userId: Long, password: String) {
+        val userSecret = "${userId}${password}".hashCode()
+        val algorithm = Algorithm.HMAC256("${userSecret}${jwtProperties.secret}")
 
         val verifier: JWTVerifier = JWT.require(algorithm)
             .withIssuer(jwtProperties.issuer)
