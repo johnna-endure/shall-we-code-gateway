@@ -1,13 +1,12 @@
-package com.shallwecode.jwt
+package com.shallwecode.certification.jwt
 
-import com.shallwecode.certification.jwt.JWTVerifier
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 
 
-@SpringBootTest(classes = [JWTVerifier::class])
-class JWTVerifierTest(@Autowired var jwtVerifier: JWTVerifier) {
+@SpringBootTest(classes = [JwtVerifier::class])
+class JwtVerifierTest(@Autowired var jwtVerifier: JwtVerifier) {
 
     @Test
     fun `토큰 검증 통과`() {

@@ -2,7 +2,7 @@ package com.shallwecode.certification.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import org.springframework.beans.factory.annotation.Value
+import com.shallwecode.certification.config.jwt.JwtProperties
 import org.springframework.stereotype.Component
 import java.time.LocalDate
 import java.time.LocalDateTime.now
@@ -10,9 +10,8 @@ import java.time.ZoneId
 import java.util.*
 
 @Component
-class JWTGenerator(
-    @Value("\${jwt.issuer}") private val issuer: String,
-    @Value("\${jwt.secret}") private val secret: String
+class JwtGenerator(
+    val jwtProperties: JwtProperties
 ) {
 
     /**
@@ -34,20 +33,15 @@ class JWTGenerator(
                 .toInstant()
         )
 
-        val algorithm = Algorithm.HMAC256("${secret}${userSecret}${now()}")
+        val algorithm = Algorithm.HMAC256("${jwtProperties.secret}${userSecret}${now()}")
 
         return JWT.create()
-            .withIssuer(issuer)
+            .withIssuer(jwtProperties.issuer)
             .withExpiresAt(expiredAt)
             .withIssuedAt(issuedAt)
             .withClaim("userId", userId)
             .withArrayClaim("role", role)
             .sign(algorithm)
     }
-
-    /**
-     * 토큰 생성시 issuer, secret 값이 존재하는지 검증합니다
-     * 존재하지 않을 경우 JWTCreateException 예외를 던집니다.
-     */
 
 }

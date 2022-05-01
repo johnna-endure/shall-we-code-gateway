@@ -1,13 +1,13 @@
-package com.shallwecode.jwt
+package com.shallwecode.certification.jwt
 
-import com.shallwecode.certification.jwt.JWTGenerator
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.boot.test.context.SpringBootTest
 
-@SpringBootTest(classes = [JWTGenerator::class])
-class JWTGeneratorTest(@Autowired var jwtGenerator: JWTGenerator) {
+//@SpringBootTest(classes = [JWTGenerator::class, JwtProperties::class])
+class JwtGeneratorTest(
+    val jwtGenerator: JwtGenerator
+) {
+
 
     @Test
     fun beanLoadTest() {

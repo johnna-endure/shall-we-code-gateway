@@ -1,9 +1,9 @@
 package com.shallwecode.certification.config.redis
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.stereotype.Component
+import org.springframework.context.annotation.Configuration
 
-@Component
+@Configuration
 @ConfigurationProperties(prefix = "redis.config")
 class RedisConfigProperties {
     lateinit var host: String;

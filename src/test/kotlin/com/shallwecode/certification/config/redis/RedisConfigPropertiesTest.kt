@@ -1,6 +1,5 @@
-package com.shallwecode.config.redis
+package com.shallwecode.certification.config.redis
 
-import com.shallwecode.certification.config.redis.RedisConfigProperties
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

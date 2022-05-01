@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
 
 @Component
-class JWTVerifier(
+class JwtVerifier(
     @Value("\${jwt.issuer}") private val issuer: String
 ) {
 

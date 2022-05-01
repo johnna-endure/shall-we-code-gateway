@@ -1,4 +1,4 @@
-package com.shallwecode.config.mongo
+package com.shallwecode.certification.config.mongo
 
 import com.shallwecode.certification.config.mongo.template.ShallWeCodeMongoTemplateWrapper
 import com.shallwecode.certification.config.mongo.template.TestMongoTemplateWrapper

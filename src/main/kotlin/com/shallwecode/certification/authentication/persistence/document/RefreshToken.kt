@@ -7,7 +7,6 @@ import org.springframework.data.redis.core.RedisHash
 class RefreshToken(
     @Id
     val userId: Long,
-    val email: String,
     val roles: List<String>,
 ) {
 
@@ -27,7 +26,7 @@ class RefreshToken(
     }
 
     override fun toString(): String {
-        return "RefreshToken(userId=$userId, email='$email', roles=$roles)"
+        return "RefreshToken(userId=$userId, roles=$roles)"
     }
 
 }
