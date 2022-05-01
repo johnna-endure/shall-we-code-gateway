@@ -1,11 +1,35 @@
+jwt:
+  issuer: shall-we-code
+  secret: A@RUIOJHBGDF!@42321
+  expireDurationDay: 7
 server:
   port: 50000
+
+redis:
+  config:
+    host: localhost
+    port: 6379
 
 spring:
   cloud:
     gateway:
       routes:
-        - id: swc-backend
+        - id: shall-we-code
           uri: http://localhost:50200
           predicates:
-            - Path=/backend/**
+            - Path=/shallwecode/**
+          filters:
+            - RewritePath=/shallwecode/(?<path>.*),/$\{path}
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowed-origins: "http://localhost:3000"
+            allowed-methods:
+              - GET
+              - PUT
+              - DELETE
+              - POST
+              - OPTIONS
+              - HEAD
+            allowed-headers: "*"
