@@ -1,8 +1,11 @@
-package com.shallwecode.certification.authentication.persistence.document
+package com.shallwecode.certification.jwt.persistence.document
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.redis.core.RedisHash
 
+/**
+ * Spring Data Redis 에 사용될 리프레시 토큰 Dpcument 클래스
+ */
 @RedisHash("refreshToken")
 class RefreshToken(
     @Id

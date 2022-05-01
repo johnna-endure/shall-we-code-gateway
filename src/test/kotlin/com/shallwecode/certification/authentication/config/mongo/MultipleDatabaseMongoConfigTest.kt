@@ -1,7 +1,7 @@
-package com.shallwecode.certification.config.mongo
+package com.shallwecode.certification.authentication.config.mongo
 
-import com.shallwecode.certification.config.mongo.template.ShallWeCodeMongoTemplateWrapper
-import com.shallwecode.certification.config.mongo.template.TestMongoTemplateWrapper
+import com.shallwecode.certification.authentication.config.mongo.template.ShallWeCodeMongoTemplateWrapper
+import com.shallwecode.certification.authentication.config.mongo.template.TestMongoTemplateWrapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

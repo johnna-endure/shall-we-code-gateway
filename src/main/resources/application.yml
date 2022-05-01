@@ -1,6 +1,7 @@
 jwt:
   issuer: shall-we-code
   secret: A@RUIOJHBGDF!@42321
+  expireDurationDay: 7
 server:
   port: 50000
 

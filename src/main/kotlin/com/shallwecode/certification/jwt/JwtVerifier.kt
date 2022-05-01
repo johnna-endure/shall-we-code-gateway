@@ -3,12 +3,15 @@ package com.shallwecode.certification.jwt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import org.springframework.beans.factory.annotation.Value
+import com.shallwecode.certification.jwt.config.JwtProperties
 import org.springframework.stereotype.Component
 
+/**
+ * JWT 서명 부분을 검증하는 역할의 클래스입니다.
+ */
 @Component
 class JwtVerifier(
-    @Value("\${jwt.issuer}") private val issuer: String
+    val jwtProperties: JwtProperties
 ) {
 
     /**
@@ -20,7 +23,7 @@ class JwtVerifier(
         val algorithm = Algorithm.HMAC256(secret)
 
         val verifier: JWTVerifier = JWT.require(algorithm)
-            .withIssuer(issuer)
+            .withIssuer(jwtProperties.issuer)
             .build()
 
         verifier.verify(token)

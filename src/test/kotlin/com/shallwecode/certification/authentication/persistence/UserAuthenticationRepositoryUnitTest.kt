@@ -1,9 +1,9 @@
 package com.shallwecode.certification.authentication.persistence
 
+import com.shallwecode.certification.authentication.config.mongo.MultipleDatabaseMongoConfig
+import com.shallwecode.certification.authentication.config.mongo.template.TestMongoTemplateWrapper
 import com.shallwecode.certification.authentication.persistence.document.UserAuthentication
 import com.shallwecode.certification.authentication.persistence.repository.UserAuthenticationMongoRepository
-import com.shallwecode.certification.config.mongo.MultipleDatabaseMongoConfig
-import com.shallwecode.certification.config.mongo.template.TestMongoTemplateWrapper
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach

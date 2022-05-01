@@ -1,4 +1,4 @@
-package com.shallwecode.certification.config.redis
+package com.shallwecode.certification.authentication.config.redis
 
 import org.springframework.context.annotation.Configuration
 

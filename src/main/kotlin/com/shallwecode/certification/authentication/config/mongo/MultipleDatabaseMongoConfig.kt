@@ -1,8 +1,8 @@
-package com.shallwecode.certification.config.mongo
+package com.shallwecode.certification.authentication.config.mongo
 
 import com.mongodb.reactivestreams.client.MongoClients
-import com.shallwecode.certification.config.mongo.template.ShallWeCodeMongoTemplateWrapper
-import com.shallwecode.certification.config.mongo.template.TestMongoTemplateWrapper
+import com.shallwecode.certification.authentication.config.mongo.template.ShallWeCodeMongoTemplateWrapper
+import com.shallwecode.certification.authentication.config.mongo.template.TestMongoTemplateWrapper
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary

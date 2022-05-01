@@ -1,6 +1,6 @@
-package com.shallwecode.certification.authentication.persistence
+package com.shallwecode.certification.jwt.persistence
 
-import com.shallwecode.certification.authentication.persistence.repository.RefreshTokenRedisRepository
+import com.shallwecode.certification.jwt.persistence.repository.RefreshTokenRedisRepository
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest
 

@@ -1,8 +1,8 @@
 package com.shallwecode.certification.authentication.persistence.repository
 
 import com.mongodb.client.result.UpdateResult
+import com.shallwecode.certification.authentication.config.mongo.template.MongoTemplateWrapper
 import com.shallwecode.certification.authentication.persistence.document.UserAuthentication
-import com.shallwecode.certification.config.mongo.template.MongoTemplateWrapper
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query.query

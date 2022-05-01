@@ -1,4 +1,4 @@
-package com.shallwecode.certification.config.redis
+package com.shallwecode.certification.authentication.config.redis
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
