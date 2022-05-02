@@ -1,5 +1,7 @@
-package com.shallwecode.certification.jwt.config
+package com.shallwecode.certification.config
 
+import com.shallwecode.certification.jwt.config.JwtProperties
+import com.shallwecode.certification.jwt.config.JwtPropertyInitializeException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

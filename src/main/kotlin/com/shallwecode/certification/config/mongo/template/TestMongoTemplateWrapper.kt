@@ -1,4 +1,4 @@
-package com.shallwecode.certification.authentication.config.mongo.template
+package com.shallwecode.certification.config.mongo.template
 
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 
