@@ -24,7 +24,7 @@ class JwtVerifier(
      * @throws InvalidClaimException 발행인 등 클레임 검증에 실패한 경우
      *
      */
-    fun verifyToken(token: String, userId: Long, password: String) {
+    fun verifyAccessToken(token: String, userId: Long, password: String) {
         val userSecret = "${userId}${password}".hashCode()
         val algorithm = Algorithm.HMAC256("${userSecret}${jwtProperties.secret}")
 
@@ -34,4 +34,6 @@ class JwtVerifier(
 
         verifier.verify(token)
     }
+
+    //TODO 리프레시 토큰 검증 메서드 필요
 }

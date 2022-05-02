@@ -27,19 +27,30 @@ class JwtGeneratorUnitTest {
     }
 
     @Test
-    fun `토큰 생성 성공`() {
+    fun `액세스 토큰 생성 성공`() {
         // given
         val userId = 1L
         val userPassword = "testpassword"
-        val userSecret = "${userId}${userPassword}".hashCode()
         val userRoles = arrayOf("user")
 
         // when
-        val token = jwtGenerator.issueToken(userId, userRoles, userSecret)
+        val token = jwtGenerator.issueAccessToken(userId, userPassword, userRoles)
 
         // then
         assertThat(token).isNotNull
     }
 
+    @Test
+    fun `리프레시 토큰 생성 성공`() {
+        // given
+        val userId = 1L
+        val userPassword = "testpassword"
+        val userRoles = arrayOf("user")
 
+        // when
+        val token = jwtGenerator.issueRefreshToken(userId, userPassword, userRoles)
+
+        // then
+        assertThat(token).isNotNull
+    }
 }

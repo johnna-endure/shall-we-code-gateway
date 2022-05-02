@@ -9,8 +9,8 @@ import org.springframework.data.redis.core.RedisHash
 @RedisHash("refreshToken")
 class RefreshToken(
     @Id
-    val userId: Long,
-    val roles: List<String>,
+    val email: String,
+    val refreshToken: String
 ) {
 
     override fun equals(other: Any?): Boolean {
@@ -19,17 +19,17 @@ class RefreshToken(
 
         other as RefreshToken
 
-        if (userId != other.userId) return false
+        if (email != other.email) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return userId.hashCode()
+        return email.hashCode()
     }
 
     override fun toString(): String {
-        return "RefreshToken(userId=$userId, roles=$roles)"
+        return "RefreshToken(email=$email, refreshToken=$refreshToken)"
     }
 
 }

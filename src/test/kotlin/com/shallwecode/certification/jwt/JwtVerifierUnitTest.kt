@@ -43,7 +43,7 @@ class JwtVerifierUnitTest {
             .sign(algorithm)
 
         // when
-        assertThrows<TokenExpiredException> { jwtVerifier.verifyToken(token, userId, password) }
+        assertThrows<TokenExpiredException> { jwtVerifier.verifyAccessToken(token, userId, password) }
     }
 
     @Test
@@ -60,7 +60,7 @@ class JwtVerifierUnitTest {
             .sign(algorithm)
 
         // when
-        assertThrows<SignatureVerificationException> { jwtVerifier.verifyToken(token, userId, password) }
+        assertThrows<SignatureVerificationException> { jwtVerifier.verifyAccessToken(token, userId, password) }
     }
 
     @Test
@@ -76,7 +76,7 @@ class JwtVerifierUnitTest {
             .sign(algorithm)
 
         // when
-        assertThrows<InvalidClaimException> { jwtVerifier.verifyToken(token, userId, password) }
+        assertThrows<InvalidClaimException> { jwtVerifier.verifyAccessToken(token, userId, password) }
     }
 
 
@@ -93,7 +93,7 @@ class JwtVerifierUnitTest {
             .withIssuer(jwtProperties.issuer)
             .sign(algorithm)
         // when
-        assertDoesNotThrow { jwtVerifier.verifyToken(token, userId, password) }
+        assertDoesNotThrow { jwtVerifier.verifyAccessToken(token, userId, password) }
     }
 
 }

@@ -27,7 +27,7 @@ class UserAuthenticationControllerUnitTest(
 ) {
 
     @MockkBean
-    var repository: UserAuthenticationMongoRepository? = null
+    lateinit var repository: UserAuthenticationMongoRepository
 
     @Test
     fun beanLoadTest() {
@@ -46,7 +46,7 @@ class UserAuthenticationControllerUnitTest(
             createDateTime = now()
         )
 
-        every { repository!!.upsert(any()) }
+        every { repository.upsert(any()) }
             .returns(
                 Mono.just(
                     UpdateResult.acknowledged(0, 0, BsonInt64(1L))
@@ -77,7 +77,7 @@ class UserAuthenticationControllerUnitTest(
         )
         val errorMessage = "데이터 저장에 실패했습니다."
 
-        every { repository!!.upsert(any()) }
+        every { repository.upsert(any()) }
             .returns(Mono.error(CreateDataException(errorMessage)))
 
         // when , then
@@ -102,7 +102,7 @@ class UserAuthenticationControllerUnitTest(
             createDateTime = now()
         )
 
-        every { repository!!.findByUserId(any()) } returns Mono.just(authentication)
+        every { repository.findByUserId(any()) } returns Mono.just(authentication)
 
         // when , then
         webTestClient.get()
@@ -124,7 +124,7 @@ class UserAuthenticationControllerUnitTest(
         // given
         val errorMessage = "test error"
 
-        every { repository!!.findByUserId(any()) } returns Mono.error(NotFoundDataException(errorMessage))
+        every { repository.findByUserId(any()) } returns Mono.error(NotFoundDataException(errorMessage))
 
         // when , then
         webTestClient.get()
@@ -146,7 +146,7 @@ class UserAuthenticationControllerUnitTest(
             createDateTime = now()
         )
 
-        every { repository!!.removeById(any()) } returns Mono.just(authentication)
+        every { repository.removeById(any()) } returns Mono.just(authentication)
 
         // when , then
         webTestClient.delete()
