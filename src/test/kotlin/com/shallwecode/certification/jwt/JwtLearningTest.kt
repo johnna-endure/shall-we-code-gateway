@@ -12,7 +12,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.util.*
 
-class JWTLearningTest {
+class JwtLearningTest {
 
     @Test
     fun `JWT 생성`() {

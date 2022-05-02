@@ -14,7 +14,7 @@ import java.sql.Date
 import java.time.LocalDate.now
 
 
-class JwtVerifierTest {
+class JwtVerifierUnitTest {
 
     lateinit var jwtVerifier: JwtVerifier
     lateinit var jwtProperties: JwtProperties

@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import reactor.kotlin.test.test
 
 @SpringBootTest
-class MultipleDatabaseMongoConfigTest(
+class MultipleDatabaseMongoConfigUnitTest(
     @Autowired
     val shallWeCodeMongoTemplateWrapper: ShallWeCodeMongoTemplateWrapper,
     @Autowired

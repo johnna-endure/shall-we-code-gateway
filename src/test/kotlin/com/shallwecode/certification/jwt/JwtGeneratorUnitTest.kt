@@ -6,7 +6,7 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 //@SpringBootTest(classes = [JWTGenerator::class, JwtProperties::class])
-class JwtGeneratorTest {
+class JwtGeneratorUnitTest {
     lateinit var jwtGenerator: JwtGenerator
     lateinit var jwtProperties: JwtProperties
 

@@ -1,16 +1,17 @@
 package com.shallwecode.certification.authentication.controller
 
-import com.shallwecode.certification.authentication.persistence.repository.UserAuthenticationMongoRepository
+import com.shallwecode.certification.authentication.service.UserAuthenticationService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class LoginController(
-    val userAuthenticationMongoRepository: UserAuthenticationMongoRepository
+    val userAuthenticationService: UserAuthenticationService
 ) {
 
-    @PostMapping()
+    @PostMapping("/login")
     fun login() {
+
     }
 
 }
