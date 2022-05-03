@@ -1,8 +1,8 @@
 package com.shallwecode.certification.authentication.controller
 
 import com.shallwecode.certification.authentication.controller.request.LoginRequest
+import com.shallwecode.certification.authentication.jwt.JwtGenerator
 import com.shallwecode.certification.authentication.persistence.repository.UserAuthenticationMongoRepository
-import com.shallwecode.certification.jwt.JwtGenerator
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -12,8 +12,9 @@ import reactor.core.publisher.Mono
 class LoginController(
     val userAuthenticationMongoRepository: UserAuthenticationMongoRepository,
 //    val refreshTokenRedisRepository: RefreshTokenRedisRepository,
-    val jwtGenerator: JwtGenerator
-) {
+    val jwtGenerator: JwtGenerator,
+
+    ) {
 
     @PostMapping("/login")
     fun login(@RequestBody request: LoginRequest) {

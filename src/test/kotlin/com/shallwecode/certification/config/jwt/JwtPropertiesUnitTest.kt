@@ -1,4 +1,4 @@
-package com.shallwecode.certification.config
+package com.shallwecode.certification.config.jwt
 
 import com.shallwecode.certification.jwt.config.JwtProperties
 import com.shallwecode.certification.jwt.config.JwtPropertyInitializeException

@@ -1,4 +1,4 @@
-package com.shallwecode.certification.jwt
+package com.shallwecode.certification.authentication.jwt
 
 import com.shallwecode.certification.jwt.config.JwtProperties
 import org.assertj.core.api.Assertions.assertThat

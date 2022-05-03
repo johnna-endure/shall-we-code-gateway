@@ -1,4 +1,4 @@
-package com.shallwecode.certification.jwt
+package com.shallwecode.certification.authentication.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier

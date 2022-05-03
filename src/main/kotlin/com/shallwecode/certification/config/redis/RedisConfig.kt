@@ -21,6 +21,9 @@ class RedisConfig(val redisConfigProperties: RedisConfigProperties) {
 
     @Bean
     fun reactiveRedisTemplate(connectionFactory: ReactiveRedisConnectionFactory): ReactiveRedisTemplate<String, String> {
-        return ReactiveRedisTemplate(connectionFactory, RedisSerializationContext.string())
+        return ReactiveRedisTemplate(
+            connectionFactory,
+            RedisSerializationContext.string()
+        )
     }
 }

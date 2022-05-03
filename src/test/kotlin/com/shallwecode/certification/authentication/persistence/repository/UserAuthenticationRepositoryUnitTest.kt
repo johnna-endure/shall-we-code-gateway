@@ -1,7 +1,6 @@
-package com.shallwecode.certification.authentication.persistence
+package com.shallwecode.certification.authentication.persistence.repository
 
 import com.shallwecode.certification.authentication.persistence.document.UserAuthentication
-import com.shallwecode.certification.authentication.persistence.repository.UserAuthenticationMongoRepository
 import com.shallwecode.certification.config.mongo.MultipleDatabaseMongoConfig
 import com.shallwecode.certification.config.mongo.template.TestMongoTemplateWrapper
 import org.assertj.core.api.Assertions.assertThat
