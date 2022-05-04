@@ -2,6 +2,7 @@ package com.shallwecode.certification.authentication.controller
 
 import com.ninjasquad.springmockk.MockkBean
 import com.shallwecode.certification.authentication.controller.request.LoginRequest
+import com.shallwecode.certification.authentication.jwt.JwtGenerator
 import com.shallwecode.certification.authentication.persistence.document.UserAuthentication
 import com.shallwecode.certification.authentication.persistence.repository.UserAuthenticationMongoRepository
 import io.mockk.every
@@ -22,6 +23,9 @@ class LoginControllerUnitTest(
 
     @MockkBean
     lateinit var repository: UserAuthenticationMongoRepository
+
+    @MockkBean
+    lateinit var jwtGenerator: JwtGenerator
 
     @Test
     fun `테스트에 필요한 빈 생성 테스트`() {
@@ -60,6 +64,8 @@ class LoginControllerUnitTest(
             .exchange()
             .expectStatus().isOk
             .expectBody()
+
+        assert(false)
     }
 
 }

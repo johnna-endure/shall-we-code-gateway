@@ -5,6 +5,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.data.redis.DataRedisTest
 import org.springframework.data.redis.core.ReactiveRedisTemplate
@@ -56,7 +57,7 @@ class RefreshTokenRedisRepositoryUnitTest(
         // given
         val email = "test@gmail.com"
         val refreshToken = "testToken"
-        
+
         // when
         refreshTokenRedisRepository.save(email, refreshToken).subscribe()
 
@@ -67,6 +68,26 @@ class RefreshTokenRedisRepositoryUnitTest(
             }
             .expectComplete()
             .verify()
+    }
+
+    @Test
+    fun `save - email 이 빈 문자열 인수로 주어지는 경우`() {
+        // given
+        val email = ""
+        val refreshToken = "testToken"
+
+        // when, then
+        assertThrows<IllegalArgumentException> { refreshTokenRedisRepository.save(email, refreshToken) }
+    }
+
+    @Test
+    fun `save - refreshToken 이 빈 문자열 인수로 주어지는 경우`() {
+        // given
+        val email = "test@gmail.com"
+        val refreshToken = ""
+
+        // when, then
+        assertThrows<IllegalArgumentException> { refreshTokenRedisRepository.save(email, refreshToken) }
     }
 
 }
