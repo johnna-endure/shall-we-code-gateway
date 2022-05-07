@@ -1,5 +1,6 @@
 package com.shallwecode.certification.authentication.persistence.repository
 
+import com.shallwecode.certification.authentication.exception.NotFoundDataException
 import com.shallwecode.certification.authentication.persistence.document.UserAuthentication
 import com.shallwecode.certification.config.mongo.MultipleDatabaseMongoConfig
 import com.shallwecode.certification.config.mongo.template.TestMongoTemplateWrapper
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest
 import org.springframework.context.annotation.Import
 import org.springframework.data.mongodb.core.query.Query
 import reactor.kotlin.test.test
+import reactor.kotlin.test.verifyError
 import reactor.test.StepVerifier
 import java.time.LocalDateTime
 
@@ -153,6 +155,23 @@ class UserAuthenticationRepositoryUnitTest(
     }
 
     @Test
+    fun `findByUserId - 결과를 조회할 수 없는 경우`() {
+        //given
+        val authentication = UserAuthentication(
+            userId = 1L,
+            email = "cws@gmail.com",
+            password = "testpassword",
+            roles = listOf<String>("user"),
+            createDateTime = LocalDateTime.now()
+        )
+
+        //when, then
+        userAuthenticationMongoRepository.findByUserId(authentication.userId)
+            .test()
+            .verifyError(NotFoundDataException::class)
+    }
+
+    @Test
     fun `findByEmail - 이메일로 사용자 인증 정보 단건 조회`() {
         //given
         val authentication = UserAuthentication(
@@ -175,6 +194,23 @@ class UserAuthenticationRepositoryUnitTest(
                 assertThat(it.createDateTime.isEqual(authentication.createDateTime))
             }
             .verifyComplete()
+    }
+
+    @Test
+    fun `findByEmail - 결과를 찾을 수 없는 경우`() {
+        //given
+        val authentication = UserAuthentication(
+            userId = 1L,
+            email = "cws@gmail.com",
+            password = "testpassword",
+            roles = listOf("user"),
+            createDateTime = LocalDateTime.now()
+        )
+
+        //when, then
+        userAuthenticationMongoRepository.findByEmail(authentication.email)
+            .test()
+            .verifyError(NotFoundDataException::class)
     }
 
     @Test
