@@ -15,7 +15,7 @@ import reactor.test.StepVerifier
 
 /**
  * 이 클래스의 테스트를 위해서 테스트용 레디스를 켜놔야한다.
- * 도커로 이 부분을 자동화하던가 대안이 필요하다.
+ * TODO TestContainer 로 이 부분을 자동화하던가 대안이 필요하다.
  */
 @DataRedisTest
 class RefreshTokenRedisRepositoryUnitTest(

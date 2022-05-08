@@ -1,4 +1,4 @@
-package com.shallwecode.certification.authentication.controller.model
+package com.shallwecode.certification.authentication.controller.response.model
 
 import java.time.LocalDateTime
 

@@ -15,10 +15,10 @@ class RefreshTokenRedisRepository(
     private val jwtProperties: JwtProperties
 ) {
     val reactiveValueOperations: ReactiveValueOperations<String, String> = reactiveRedisTemplate.opsForValue()
+    val expireDurationSeconds: Long = jwtProperties.getExpireDurationSeconds()
     fun save(
         email: String,
         refreshToken: String,
-        expireDurationSeconds: Long = jwtProperties.getExpireDurationSeconds()
     ): Mono<Boolean> {
         require(!isBlank(email))
         require(!isBlank(refreshToken))

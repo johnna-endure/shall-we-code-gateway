@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.query.Query
 import reactor.kotlin.test.test
 import reactor.kotlin.test.verifyError
 import reactor.test.StepVerifier
+import java.time.Duration
 import java.time.LocalDateTime
 
 @DataMongoTest
@@ -178,10 +179,10 @@ class UserAuthenticationRepositoryUnitTest(
             userId = 1L,
             email = "cws@gmail.com",
             password = "testpassword",
-            roles = listOf<String>("user"),
+            roles = listOf("user"),
             createDateTime = LocalDateTime.now()
         )
-        mongoTemplate.save(authentication).subscribe()
+        mongoTemplate.save(authentication).block(Duration.ofMillis(100))
 
         //when, then
         userAuthenticationMongoRepository.findByEmail(authentication.email)

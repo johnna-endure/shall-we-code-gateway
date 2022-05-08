@@ -1,7 +1,7 @@
 package com.shallwecode.certification.authentication.controller
 
-import com.shallwecode.certification.authentication.controller.model.UserAuthenticationModel
 import com.shallwecode.certification.authentication.controller.request.UserAuthenticationSaveRequest
+import com.shallwecode.certification.authentication.controller.response.model.UserAuthenticationModel
 import com.shallwecode.certification.authentication.exception.CreateDataException
 import com.shallwecode.certification.authentication.exception.DeleteDataException
 import com.shallwecode.certification.authentication.exception.NotFoundDataException

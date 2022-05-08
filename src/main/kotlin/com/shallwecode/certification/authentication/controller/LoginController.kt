@@ -1,32 +1,64 @@
 package com.shallwecode.certification.authentication.controller
 
 import com.shallwecode.certification.authentication.controller.request.LoginRequest
+import com.shallwecode.certification.authentication.controller.response.LoginResult
+import com.shallwecode.certification.authentication.controller.util.PasswordMatcher
 import com.shallwecode.certification.authentication.jwt.JwtGenerator
+import com.shallwecode.certification.authentication.persistence.repository.RefreshTokenRedisRepository
 import com.shallwecode.certification.authentication.persistence.repository.UserAuthenticationMongoRepository
+import com.shallwecode.certification.common.http.response.HttpResponse
+import mu.KotlinLogging
+import org.springframework.http.ResponseCookie
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
+
 
 @RestController
 class LoginController(
     val userAuthenticationMongoRepository: UserAuthenticationMongoRepository,
-//    val refreshTokenRedisRepository: RefreshTokenRedisRepository,
+    val refreshTokenRedisRepository: RefreshTokenRedisRepository,
     val jwtGenerator: JwtGenerator
 ) {
 
-    @PostMapping("/login")
-    fun login(@RequestBody request: LoginRequest) {
-        userAuthenticationMongoRepository.findByEmail(request.email)
-            .filter { it.email == request.email }
-            .flatMap {
-//                val accessToken = jwtGenerator.issueAccessToken(it.userId, it.password, it.roles.toTypedArray())
-//                val refreshToken = jwtGenerator.issueRefreshToken(it.userId, it.password, it.roles.toTypedArray())
+    val logger = KotlinLogging.logger {}
 
-                Mono.just(
-                    ""
-                )
+    @PostMapping("/login")
+    fun login(
+        @RequestBody request: LoginRequest,
+        exchange: ServerWebExchange
+    ): Mono<HttpResponse<LoginResult>> {
+        return userAuthenticationMongoRepository.findByEmail(request.email)
+            .flatMap { authentication ->
+                if (PasswordMatcher.match(request.password, authentication.password)) {
+                    val accessToken = jwtGenerator.issueAccessToken(
+                        authentication.userId,
+                        authentication.password,
+                        authentication.roles.toTypedArray()
+                    )
+                    val refreshToken = jwtGenerator.issueRefreshToken(
+                        authentication.userId,
+                        authentication.password,
+                        authentication.roles.toTypedArray()
+                    )
+
+                    exchange.response.addCookie(ResponseCookie.from("swc_access_token", accessToken).build())
+                    exchange.response.addCookie(ResponseCookie.from("swc_refresh_token", refreshToken).build())
+
+                    refreshTokenRedisRepository.save(authentication.email, refreshToken)
+                        .map { saved ->
+                            if (saved) {
+                                HttpResponse(body = LoginResult(true))
+                            } else {
+                                logger.error { "[login] redis에 refresh token 저장하기 실패" }
+                                HttpResponse(body = LoginResult(false))
+                            }
+                        }
+                } else {
+                    Mono.just(HttpResponse(body = LoginResult(false)))
+                }
             }
     }
-
 }

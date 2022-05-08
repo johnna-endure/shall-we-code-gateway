@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseStatus
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import reactor.core.publisher.Mono
 
-// TODO 테스트 작성 필요
 @RestControllerAdvice
 class MongoDBExceptionHandlers {
 
