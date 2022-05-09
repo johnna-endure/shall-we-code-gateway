@@ -33,6 +33,7 @@ dependencies {
     implementation("com.auth0:java-jwt:3.19.1")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
