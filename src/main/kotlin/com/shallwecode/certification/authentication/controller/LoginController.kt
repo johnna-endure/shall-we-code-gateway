@@ -47,17 +47,24 @@ class LoginController(
                     exchange.response.addCookie(ResponseCookie.from("swc_access_token", accessToken).build())
                     exchange.response.addCookie(ResponseCookie.from("swc_refresh_token", refreshToken).build())
 
-                    refreshTokenRedisRepository.save(authentication.email, refreshToken)
-                        .map { saved ->
-                            if (saved) {
-                                HttpResponse(body = LoginResult(true))
-                            } else {
-                                logger.error { "[login] redis에 refresh token 저장하기 실패" }
-                                HttpResponse(body = LoginResult(false))
-                            }
-                        }
+                    saveRefreshTokenAndReturnLoginResult(authentication.email, refreshToken)
                 } else {
                     Mono.just(HttpResponse(body = LoginResult(false)))
+                }
+            }
+    }
+
+    private fun saveRefreshTokenAndReturnLoginResult(
+        email: String,
+        refreshToken: String
+    ): Mono<HttpResponse<LoginResult>> {
+        return refreshTokenRedisRepository.save(email, refreshToken)
+            .map { saved ->
+                if (saved) {
+                    HttpResponse(body = LoginResult(true))
+                } else {
+                    logger.error { "[login] redis에 refresh token 저장하기 실패" }
+                    HttpResponse(body = LoginResult(false))
                 }
             }
     }

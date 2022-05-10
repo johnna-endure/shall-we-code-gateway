@@ -32,18 +32,17 @@ class JwtVerifierUnitTest {
     @Test
     fun `verifyToken - 토큰이 만료됐을 경우, TokenExpiredException 예외를 던지는지 테스트 `() {
         // given
-        val userId = 12L
-        val password = "testpassword"
-        val userSecret = "${userId}${password}".hashCode()
-        val algorithm = Algorithm.HMAC256("${userSecret}${jwtProperties.secret}")
+        val algorithm = Algorithm.HMAC256(jwtProperties.secret)
 
         val token = JWT.create()
+            .withClaim("userId", 1L)
+            .withClaim("roles", listOf("user"))
             .withExpiresAt(Date.valueOf(now().minusDays(1)))
             .withIssuer(jwtProperties.issuer)
             .sign(algorithm)
 
         // when
-        assertThrows<TokenExpiredException> { jwtVerifier.verifyAccessToken(token, userId, password) }
+        assertThrows<TokenExpiredException> { jwtVerifier.verifyAccessToken(token) }
     }
 
     @Test
@@ -55,45 +54,47 @@ class JwtVerifierUnitTest {
         val algorithm = Algorithm.HMAC256("${userSecret}${jwtProperties.secret}addsomestring")
 
         val token = JWT.create()
+            .withClaim("userId", 1L)
+            .withClaim("roles", listOf("user"))
             .withExpiresAt(Date.valueOf(now().plusDays(1)))
             .withIssuer(jwtProperties.issuer)
             .sign(algorithm)
 
         // when
-        assertThrows<SignatureVerificationException> { jwtVerifier.verifyAccessToken(token, userId, password) }
+        assertThrows<SignatureVerificationException> { jwtVerifier.verifyAccessToken(token) }
     }
 
     @Test
     fun `verifyToken - 발행인 정보가 빠졌을 경우, InvalidClaimException 예외를 던지는지 테스트`() {
         // given
-        val userId = 12L
-        val password = "testpassword"
-        val userSecret = "${userId}${password}".hashCode()
-        val algorithm = Algorithm.HMAC256("${userSecret}${jwtProperties.secret}")
+        val algorithm = Algorithm.HMAC256(jwtProperties.secret)
 
         val token = JWT.create()
+            .withClaim("userId", 1L)
+            .withClaim("roles", listOf("user"))
             .withExpiresAt(Date.valueOf(now().plusDays(1)))
             .sign(algorithm)
 
         // when
-        assertThrows<InvalidClaimException> { jwtVerifier.verifyAccessToken(token, userId, password) }
+        assertThrows<InvalidClaimException> { jwtVerifier.verifyAccessToken(token) }
     }
 
 
     @Test
     fun `verifyToken - 올바른 토큰이 검증에 통과하는지 테스트`() {
         // given
-        val userId = 12L
-        val password = "testpassword"
-        val userSecret = "${userId}${password}".hashCode()
-        val algorithm = Algorithm.HMAC256("${userSecret}${jwtProperties.secret}")
+        val algorithm = Algorithm.HMAC256(jwtProperties.secret)
 
         val token = JWT.create()
+            .withClaim("userId", 1L)
+            .withClaim("roles", listOf("user"))
             .withExpiresAt(Date.valueOf(now().plusDays(1)))
             .withIssuer(jwtProperties.issuer)
             .sign(algorithm)
+
         // when
-        assertDoesNotThrow { jwtVerifier.verifyAccessToken(token, userId, password) }
+        assertDoesNotThrow { jwtVerifier.verifyAccessToken(token) }
     }
 
+    // TODO 반환값 검증 테스트 추가 필요
 }
