@@ -14,7 +14,7 @@ import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 
 // TODO 테스트 필요
-// 어떻게 테스트함?
+// 어떻게 테스트함? 일단 이 부분은 수동테스트로
 @Component
 class JwtAuthenticationGatewayFilterFactory(
     val jwtVerifier: JwtVerifier
