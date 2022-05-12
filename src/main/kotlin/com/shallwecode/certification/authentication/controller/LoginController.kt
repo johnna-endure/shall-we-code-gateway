@@ -11,11 +11,13 @@ import mu.KotlinLogging
 import org.springframework.http.ResponseCookie
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 
 
+@RequestMapping("/authentication")
 @RestController
 class LoginController(
     val userAuthenticationMongoRepository: UserAuthenticationMongoRepository,
@@ -35,12 +37,10 @@ class LoginController(
                 if (PasswordMatcher.match(request.password, authentication.password)) {
                     val accessToken = jwtGenerator.issueAccessToken(
                         authentication.userId,
-                        authentication.password,
                         authentication.roles.toTypedArray()
                     )
                     val refreshToken = jwtGenerator.issueRefreshToken(
                         authentication.userId,
-                        authentication.password,
                         authentication.roles.toTypedArray()
                     )
 

@@ -21,8 +21,8 @@ import reactor.core.publisher.Mono
 import java.time.LocalDateTime.now
 import java.time.LocalDateTime.parse
 
-@WebFluxTest(controllers = [UserAuthenticationController::class])
-class UserAuthenticationControllerUnitTest(
+@WebFluxTest(controllers = [UserAuthenticationInfoController::class])
+class UserAuthenticationInfoControllerUnitTest(
     @Autowired val webTestClient: WebTestClient
 ) {
 

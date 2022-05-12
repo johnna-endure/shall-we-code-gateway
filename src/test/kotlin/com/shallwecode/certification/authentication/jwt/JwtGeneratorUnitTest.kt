@@ -34,7 +34,7 @@ class JwtGeneratorUnitTest {
         val userRoles = arrayOf("user")
 
         // when
-        val token = jwtGenerator.issueAccessToken(userId, userPassword, userRoles)
+        val token = jwtGenerator.issueAccessToken(userId, userRoles)
 
         // then
         assertThat(token).isNotNull
@@ -48,7 +48,7 @@ class JwtGeneratorUnitTest {
         val userRoles = arrayOf("user")
 
         // when
-        val token = jwtGenerator.issueRefreshToken(userId, userPassword, userRoles)
+        val token = jwtGenerator.issueRefreshToken(userId, userRoles)
 
         // then
         assertThat(token).isNotNull

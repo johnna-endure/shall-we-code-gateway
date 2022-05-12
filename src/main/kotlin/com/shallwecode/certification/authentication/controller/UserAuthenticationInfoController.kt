@@ -18,10 +18,9 @@ import reactor.core.publisher.Mono
  * UserAuthentication 정보 다루기 위한 CRUD API를 담은 컨트롤러 클래스입니다.
  *
  */
-// TODO 적절한 에러 처리 필요
 @RequestMapping("/authentication")
 @RestController
-class UserAuthenticationController(
+class UserAuthenticationInfoController(
     private val userAuthenticationMongoRepository: UserAuthenticationMongoRepository
 ) {
 

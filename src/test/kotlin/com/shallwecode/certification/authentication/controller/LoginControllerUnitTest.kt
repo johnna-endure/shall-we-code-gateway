@@ -67,8 +67,8 @@ class LoginControllerUnitTest(
                     )
                 )
             )
-        every { jwtGenerator.issueAccessToken(any(), any(), any()) } returns "accessToken"
-        every { jwtGenerator.issueRefreshToken(any(), any(), any()) } returns "refreshToken"
+        every { jwtGenerator.issueAccessToken(any(), any()) } returns "accessToken"
+        every { jwtGenerator.issueRefreshToken(any(), any()) } returns "refreshToken"
         every { refreshTokenRedisRepository.save(any(), any()) } returns Mono.just(true)
 
         // when, then
@@ -176,8 +176,8 @@ class LoginControllerUnitTest(
                     )
                 )
             )
-        every { jwtGenerator.issueAccessToken(any(), any(), any()) } returns "accessToken"
-        every { jwtGenerator.issueRefreshToken(any(), any(), any()) } returns "refreshToken"
+        every { jwtGenerator.issueAccessToken(any(), any()) } returns "accessToken"
+        every { jwtGenerator.issueRefreshToken(any(), any()) } returns "refreshToken"
         every { refreshTokenRedisRepository.save(any(), any()) }
             .throws(IllegalArgumentException(errorMessage))
 
@@ -216,8 +216,8 @@ class LoginControllerUnitTest(
                     )
                 )
             )
-        every { jwtGenerator.issueAccessToken(any(), any(), any()) } returns "accessToken"
-        every { jwtGenerator.issueRefreshToken(any(), any(), any()) } returns "refreshToken"
+        every { jwtGenerator.issueAccessToken(any(), any()) } returns "accessToken"
+        every { jwtGenerator.issueRefreshToken(any(), any()) } returns "refreshToken"
         every { refreshTokenRedisRepository.save(any(), any()) }
             .throws(RuntimeException(errorMessage))
 
