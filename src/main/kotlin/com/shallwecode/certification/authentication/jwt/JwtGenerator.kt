@@ -2,7 +2,7 @@ package com.shallwecode.certification.authentication.jwt
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import com.shallwecode.certification.jwt.config.JwtProperties
+import com.shallwecode.certification.config.jwt.JwtProperties
 import com.shallwecode.common.constant.TimeConstants.KST_TIME_ZONE_ID
 import org.springframework.stereotype.Component
 import java.lang.Long.parseLong

@@ -5,13 +5,16 @@ import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.InvalidClaimException
 import com.auth0.jwt.exceptions.SignatureVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
-import com.shallwecode.certification.jwt.config.JwtProperties
+import com.shallwecode.certification.config.jwt.JwtProperties
+import com.shallwecode.common.constant.TimeConstants.KST_TIME_ZONE_ID
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
-import java.sql.Date
-import java.time.LocalDate.now
+import java.lang.Long.parseLong
+import java.time.LocalDate
+import java.util.*
 
 
 class JwtVerifierUnitTest {
@@ -30,14 +33,18 @@ class JwtVerifierUnitTest {
     }
 
     @Test
-    fun `verifyToken - 토큰이 만료됐을 경우, TokenExpiredException 예외를 던지는지 테스트 `() {
+    fun `verifyAccessToken - 토큰이 만료 됐을 경우, TokenExpiredException 예외를 던지는지 테스트 `() {
         // given
         val algorithm = Algorithm.HMAC256(jwtProperties.secret)
+        val expiredAt = Date.from(
+            LocalDate.now().minusDays(1)
+                .atStartOfDay(KST_TIME_ZONE_ID).toInstant()
+        )
 
         val token = JWT.create()
             .withClaim("userId", 1L)
             .withClaim("roles", listOf("user"))
-            .withExpiresAt(Date.valueOf(now().minusDays(1)))
+            .withExpiresAt(expiredAt)
             .withIssuer(jwtProperties.issuer)
             .sign(algorithm)
 
@@ -46,17 +53,21 @@ class JwtVerifierUnitTest {
     }
 
     @Test
-    fun `verifyToken - 사인 검증에 실패했을 때, SignatureVerificationException 예외를 던지는지 테스트`() {
+    fun `verifyAccessToken - 사인 검증에 실패했을 때, SignatureVerificationException 예외를 던지는지 테스트`() {
         // given
         val userId = 12L
         val password = "testpassword"
         val userSecret = "${userId}${password}".hashCode()
         val algorithm = Algorithm.HMAC256("${userSecret}${jwtProperties.secret}addsomestring")
+        val expiredAt = Date.from(
+            LocalDate.now().plusDays(1)
+                .atStartOfDay(KST_TIME_ZONE_ID).toInstant()
+        )
 
         val token = JWT.create()
             .withClaim("userId", 1L)
             .withClaim("roles", listOf("user"))
-            .withExpiresAt(Date.valueOf(now().plusDays(1)))
+            .withExpiresAt(expiredAt)
             .withIssuer(jwtProperties.issuer)
             .sign(algorithm)
 
@@ -65,14 +76,18 @@ class JwtVerifierUnitTest {
     }
 
     @Test
-    fun `verifyToken - 발행인 정보가 빠졌을 경우, InvalidClaimException 예외를 던지는지 테스트`() {
+    fun `verifyAccessToken - 발행인 정보가 빠졌을 경우, InvalidClaimException 예외를 던지는지 테스트`() {
         // given
         val algorithm = Algorithm.HMAC256(jwtProperties.secret)
+        val expiredAt = Date.from(
+            LocalDate.now().plusDays(1)
+                .atStartOfDay(KST_TIME_ZONE_ID).toInstant()
+        )
 
         val token = JWT.create()
             .withClaim("userId", 1L)
             .withClaim("roles", listOf("user"))
-            .withExpiresAt(Date.valueOf(now().plusDays(1)))
+            .withExpiresAt(expiredAt)
             .sign(algorithm)
 
         // when
@@ -81,14 +96,17 @@ class JwtVerifierUnitTest {
 
 
     @Test
-    fun `verifyToken - 올바른 토큰이 검증에 통과하는지 테스트`() {
+    fun `verifyAccessToken - 올바른 토큰이 검증에 통과하는지 테스트`() {
         // given
         val algorithm = Algorithm.HMAC256(jwtProperties.secret)
-
+        val expiredAt = Date.from(
+            LocalDate.now().plusDays(1)
+                .atStartOfDay(KST_TIME_ZONE_ID).toInstant()
+        )
         val token = JWT.create()
             .withClaim("userId", 1L)
             .withClaim("roles", listOf("user"))
-            .withExpiresAt(Date.valueOf(now().plusDays(1)))
+            .withExpiresAt(expiredAt)
             .withIssuer(jwtProperties.issuer)
             .sign(algorithm)
 
@@ -96,5 +114,29 @@ class JwtVerifierUnitTest {
         assertDoesNotThrow { jwtVerifier.verifyAccessToken(token) }
     }
 
-    // TODO 반환값 검증 테스트 추가 필요
+    @Test
+    fun `verifyAccessToken - 검증에 성공하고 DecodedJWT 를 반환한 경우`() {
+        // given
+        val algorithm = Algorithm.HMAC256(jwtProperties.secret)
+        val addDays = parseLong(jwtProperties.expireDurationDay)
+        val expiredAt = Date.from(
+            LocalDate.now().plusDays(addDays)
+                .atStartOfDay(KST_TIME_ZONE_ID).toInstant()
+        )
+        val validToken = JWT.create()
+            .withClaim("userId", 1L)
+            .withClaim("roles", listOf("user"))
+            .withExpiresAt(expiredAt)
+            .withIssuer(jwtProperties.issuer)
+            .sign(algorithm)
+
+        // when
+        val decodedJWT = jwtVerifier.verifyAccessToken(validToken)
+
+        // when
+        assertThat(decodedJWT.issuer).isEqualTo(jwtProperties.issuer)
+        assertThat(decodedJWT.expiresAt).isEqualTo(expiredAt.toInstant())
+        assertThat(decodedJWT.claims["userId"]!!.asLong()).isEqualTo(1L)
+        assertThat(decodedJWT.claims["roles"]!!.asList(String::class.java)).isEqualTo(listOf("user"))
+    }
 }

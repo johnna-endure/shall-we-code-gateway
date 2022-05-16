@@ -1,7 +1,5 @@
 package com.shallwecode.certification.config.jwt
 
-import com.shallwecode.certification.jwt.config.JwtProperties
-import com.shallwecode.certification.jwt.config.JwtPropertyInitializeException
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -52,4 +50,15 @@ class JwtPropertiesUnitTest(
         assertThrows<JwtPropertyInitializeException> { jwtProperties.expireDurationDay }
     }
 
+    @Test
+    fun `getExpireDurationSeconds - 기간(day)을 초로 변환`() {
+
+        // given
+        jwtProperties.expireDurationDay = "2"
+        val expectedSeconds: Long = 2 * (60 * 60 * 24)
+
+        //then
+        assertThat(jwtProperties.getExpireDurationSeconds()).isEqualTo(expectedSeconds)
+
+    }
 }

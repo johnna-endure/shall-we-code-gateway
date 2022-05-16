@@ -1,4 +1,4 @@
-package com.shallwecode.certification.jwt.config
+package com.shallwecode.certification.config.jwt
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 import org.springframework.stereotype.Component
@@ -21,7 +21,6 @@ class JwtProperties {
         }
 }
 
-// TODO 확장 함수 단위 테스트 추가 필요
 fun JwtProperties.getExpireDurationSeconds(): Long {
     return parseLong(this.expireDurationDay) * (60L * 60L * 24L)
 }

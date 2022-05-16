@@ -1,11 +1,10 @@
 package com.shallwecode.certification.authentication.jwt
 
-import com.shallwecode.certification.jwt.config.JwtProperties
+import com.shallwecode.certification.config.jwt.JwtProperties
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-//@SpringBootTest(classes = [JWTGenerator::class, JwtProperties::class])
 class JwtGeneratorUnitTest {
     lateinit var jwtGenerator: JwtGenerator
     lateinit var jwtProperties: JwtProperties

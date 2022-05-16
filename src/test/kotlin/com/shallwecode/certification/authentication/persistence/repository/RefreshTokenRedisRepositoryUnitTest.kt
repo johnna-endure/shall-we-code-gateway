@@ -1,6 +1,6 @@
 package com.shallwecode.certification.authentication.persistence.repository
 
-import com.shallwecode.certification.jwt.config.JwtProperties
+import com.shallwecode.certification.config.jwt.JwtProperties
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
