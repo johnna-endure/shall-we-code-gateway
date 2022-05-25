@@ -1,8 +1,9 @@
 package com.shallwecode.certification.authentication.persistence.repository
 
 import com.mongodb.client.result.UpdateResult
-import com.shallwecode.certification.authentication.config.mongo.template.MongoTemplateWrapper
+import com.shallwecode.certification.authentication.exception.NotFoundDataException
 import com.shallwecode.certification.authentication.persistence.document.UserAuthentication
+import com.shallwecode.certification.config.mongo.template.MongoTemplateWrapper
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate
 import org.springframework.data.mongodb.core.query.Criteria.where
 import org.springframework.data.mongodb.core.query.Query.query
@@ -32,13 +33,14 @@ class UserAuthenticationMongoRepository(private val mongoTemplateWrapper: MongoT
 
     fun findByUserId(userId: Long): Mono<UserAuthentication> {
         return template.findById(userId, UserAuthentication::class.java)
+            .switchIfEmpty(Mono.error(NotFoundDataException("해당 userId : $userId 에 해당하는 정보를 찾을 수 없습니다.")))
     }
 
     fun findByEmail(email: String): Mono<UserAuthentication> {
         return template.findOne(
             query(where("email").`is`(email)),
             UserAuthentication::class.java
-        )
+        ).switchIfEmpty(Mono.error(NotFoundDataException("해당 이메일 : $email 에 해당하는 정보를 찾을 수 없습니다.")))
     }
 
     fun removeById(userId: Long): Mono<UserAuthentication> {

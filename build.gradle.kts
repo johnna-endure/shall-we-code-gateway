@@ -33,6 +33,7 @@ dependencies {
     implementation("com.auth0:java-jwt:3.19.1")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb-reactive")
     implementation("org.springframework.boot:spring-boot-starter-data-redis-reactive")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -44,6 +45,8 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-webtestclient")
     testImplementation("org.springframework.security:spring-security-test")
+
+    implementation("io.github.microutils:kotlin-logging-jvm:2.1.20")
 }
 
 dependencyManagement {

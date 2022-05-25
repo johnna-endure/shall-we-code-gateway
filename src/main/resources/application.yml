@@ -1,14 +1,23 @@
+server:
+  port: 50000
+  max-http-header-size: 40KB
+
 jwt:
   issuer: shall-we-code
   secret: A@RUIOJHBGDF!@42321
   expireDurationDay: 7
-server:
-  port: 50000
 
 redis:
   config:
     host: localhost
     port: 6379
+
+## /actuator/gateway/routes 로 라우팅 정보를 볼 수 있다.
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
 
 spring:
   cloud:
@@ -20,7 +29,7 @@ spring:
             - Path=/shallwecode/**
           filters:
             - RewritePath=/shallwecode/(?<path>.*),/$\{path}
-
+            - JwtAuthentication
       globalcors:
         cors-configurations:
           '[/**]':
@@ -33,3 +42,4 @@ spring:
               - OPTIONS
               - HEAD
             allowed-headers: "*"
+

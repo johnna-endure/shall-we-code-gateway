@@ -1,7 +1,7 @@
 package com.shallwecode
 
-import com.shallwecode.certification.authentication.config.redis.RedisConfigProperties
-import com.shallwecode.certification.jwt.config.JwtProperties
+import com.shallwecode.certification.config.jwt.JwtProperties
+import com.shallwecode.certification.config.redis.RedisConfigProperties
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.runApplication
