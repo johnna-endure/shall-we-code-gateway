@@ -76,7 +76,7 @@ class LoginControllerUnitTest(
         val expectedBody = jsonMapper.writeValueAsString(HttpResponse(body = LoginResult(true)))
 
         webTestClient.post()
-            .uri("/authentication/login")
+            .uri("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(request))
             .exchange()
@@ -103,7 +103,7 @@ class LoginControllerUnitTest(
 
         // when, then
         webTestClient.post()
-            .uri("/authentication/login")
+            .uri("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(request))
             .exchange()
@@ -143,7 +143,7 @@ class LoginControllerUnitTest(
         )
 
         webTestClient.post()
-            .uri("/authentication/login")
+            .uri("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(request))
             .exchange()
@@ -183,7 +183,7 @@ class LoginControllerUnitTest(
 
         // when, then
         webTestClient.post()
-            .uri("/authentication/login")
+            .uri("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(request))
             .exchange()
@@ -223,7 +223,7 @@ class LoginControllerUnitTest(
 
         // when, then
         webTestClient.post()
-            .uri("/authentication/login")
+            .uri("/login")
             .contentType(MediaType.APPLICATION_JSON)
             .body(BodyInserters.fromValue(request))
             .exchange()
